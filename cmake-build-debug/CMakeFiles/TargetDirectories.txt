@@ -1,0 +1,3 @@
+C:/Users/ronger/CLionProjects/stm32-led/cmake-build-debug/CMakeFiles/stm32-led.elf.dir
+C:/Users/ronger/CLionProjects/stm32-led/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/ronger/CLionProjects/stm32-led/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,5 @@
+C:\Users\ronger\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.6948.80\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=F:/STM32Cube/GNU-Tools-ARM-Embedded/bin/arm-none-eabi-gcc.exe -DCMAKE_CXX_COMPILER=F:/STM32Cube/GNU-Tools-ARM-Embedded/bin/arm-none-eabi-g++.exe -G "CodeBlocks - MinGW Makefiles" C:\Users\ronger\CLionProjects\stm32-led
+-- Minimal optimization, debug info included
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/ronger/CLionProjects/stm32-led/cmake-build-debug
