@@ -125,8 +125,9 @@ static void thread1_entry(void *parameter)
         temp = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);
         if (temp) {
             num++;
+            // 按键消抖
+            rt_thread_delay(1000);
         }
-        rt_thread_yield();
     }
 }
 /* 线程 2 的入口函数 */
@@ -135,8 +136,8 @@ static void thread2_entry(void *parameter)
     while (1) {
         switch (num % 3) {
             case 0:
-                HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_SET);
-                HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_SET);
+                HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_RESET);
+                HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
                 rt_thread_yield();
                 break;
             case 1:
