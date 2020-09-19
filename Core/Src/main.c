@@ -60,6 +60,7 @@ static void thread2_entry(void *parameter);
 /* USER CODE BEGIN 0 */
 
 uint8_t num = 0;
+uint8_t press_num = 0;
 static rt_thread_t receive_thread1 = RT_NULL;
 static rt_thread_t receive_thread2 = RT_NULL;
 
@@ -124,9 +125,19 @@ static void thread1_entry(void *parameter)
     while (1) {
         temp = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);
         if (temp) {
-            num++;
+            if (press_num == 2) {
+                num = 0;
+                press_num = 0;
+            } else {
+                num++;
+                press_num++;
+            }
             // 按键消抖
             rt_thread_delay(1000);
+        } else {
+            if (press_num == 1) {
+                press_num--;
+            }
         }
     }
 }
@@ -134,22 +145,30 @@ static void thread1_entry(void *parameter)
 static void thread2_entry(void *parameter)
 {
     while (1) {
-        switch (num % 3) {
-            case 0:
-                HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_RESET);
-                HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
-                rt_thread_yield();
-                break;
-            case 1:
-                HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_2);
-                HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_3);
-                rt_thread_delay(1000);
-                break;
-            case 2:
-                HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_2);
-                HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_3);
-                rt_thread_delay(500);
-                break;
+        rt_kprintf("num:%d\r\n",num);
+        rt_kprintf("press_num:%d\r\n",press_num);
+        if (press_num == 2) {
+            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_SET);
+            HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_SET);
+            rt_thread_yield();
+        } else {
+            switch (num % 3) {
+                case 0:
+                    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_RESET);
+                    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
+                    rt_thread_yield();
+                    break;
+                case 1:
+                    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_2);
+                    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_3);
+                    rt_thread_delay(1000);
+                    break;
+                case 2:
+                    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_2);
+                    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_3);
+                    rt_thread_delay(500);
+                    break;
+            }
         }
     }
 }
