@@ -145,8 +145,6 @@ static void thread1_entry(void *parameter)
 static void thread2_entry(void *parameter)
 {
     while (1) {
-        rt_kprintf("num:%d\r\n",num);
-        rt_kprintf("press_num:%d\r\n",press_num);
         if (press_num == 2) {
             HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_SET);
             HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_SET);
